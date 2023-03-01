@@ -116,8 +116,21 @@ func (s *Stat[T]) DrawPNG(w io.Writer, points int) error {
 		yValues[i] = s.digest.Quantile(xValues[i])
 	}
 	graph := chart.Chart{
+		XAxis: chart.XAxis{
+			NameStyle: chart.StyleShow(),
+			Style:     chart.StyleShow(),
+		},
+		YAxis: chart.YAxis{
+			NameStyle: chart.StyleShow(),
+			Style:     chart.StyleShow(),
+		},
 		Series: []chart.Series{
 			chart.ContinuousSeries{
+				Style: chart.Style{
+					Show:        true,
+					StrokeColor: chart.GetDefaultColor(0).WithAlpha(64),
+					FillColor:   chart.GetDefaultColor(0).WithAlpha(64),
+				},
 				XValues: xValues,
 				YValues: yValues,
 			},
