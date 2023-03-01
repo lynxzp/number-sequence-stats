@@ -1,0 +1,11 @@
+```
+$ go test -bench . -benchmem                             goos: linux
+goarch: amd64
+pkg: github.com/lynxzp/data-sequence-stat
+cpu: Intel(R) Core(TM) i7-4790 CPU @ 3.60GHz
+BenchmarkStat/input_size_1000-8                   138484              8741 ns/op               0 B/op          0 allocs/op
+BenchmarkStat/input_size_1000000-8                   138           8680120 ns/op               0 B/op          0 allocs/op
+BenchmarkStat/input_size_1000000000-8                  1        8638914038 ns/op               0 B/op          0 allocs/op
+PASS
+ok      github.com/lynxzp/data-sequence-stat    12.013s
+```
