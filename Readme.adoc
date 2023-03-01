@@ -24,3 +24,30 @@ BenchmarkStat/input_size_1000000000-8                  1        3643973531 ns/op
 PASS
 ok      github.com/lynxzp/number_sequence_stats 6.370s
 ```
+
+## Example
+
+```
+import stat "github.com/lynxzp/number_sequence_stats"
+
+const tDigestEnabled = true
+s := stat.New[int64](tDigestEnabled)
+for i := 0; i < 1000000; i++ {
+    s.Add(int64(i))
+}
+
+fmt.Println(s.Min())
+fmt.Println(s.Quantile(0.5))
+fmt.Println(s)
+
+writer := bytes.NewBuffer([]byte{})
+const pointCount = 1000
+_ = s.DrawPNG(writer, pointCount)
+```
+result:
+```
+0
+499999.5
+min: 0, max: 999999, avg: 499999.5, rms: 577349.8, stddev: 288675 sum: 4.999995e+11 amount: 1000000
+0.1%: 999.5, 1%: 9999.5, 10%: 99999.5, 50%: 499999.5, 90%: 899999.5, 99%: 989999.5, 99.9%: 998999.5
+```

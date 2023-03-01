@@ -3,6 +3,8 @@ package number_sequence_stats
 import (
 	"fmt"
 	"github.com/influxdata/tdigest"
+	"github.com/wcharczuk/go-chart"
+	"io"
 	"math"
 )
 
@@ -21,6 +23,8 @@ type Stat[T Number] struct {
 	sqsum  float64
 	digest *tdigest.TDigest
 }
+
+var ErrTDigestDisabled = fmt.Errorf("tdigest is disabled")
 
 func New[T Number](tdigestEnable bool) *Stat[T] {
 	s := Stat[T]{}
@@ -99,4 +103,26 @@ func (s *Stat[T]) String() string {
 		s.Min(), s.Max(), s.Avg(), s.Rms(), s.Stddev(), s.Sum(), s.Amount(),
 		s.digest.Quantile(0.001), s.digest.Quantile(0.01), s.digest.Quantile(0.1), s.digest.Quantile(0.5),
 		s.digest.Quantile(0.9), s.digest.Quantile(0.99), s.digest.Quantile(0.999))
+}
+
+func (s *Stat[T]) DrawPNG(w io.Writer, points int) error {
+	if s.digest == nil {
+		return ErrTDigestDisabled
+	}
+	xValues := make([]float64, points)
+	yValues := make([]float64, points)
+	for i := 0; i < points; i++ {
+		xValues[i] = float64(i) / float64(points)
+		yValues[i] = s.digest.Quantile(xValues[i])
+	}
+	graph := chart.Chart{
+		Series: []chart.Series{
+			chart.ContinuousSeries{
+				XValues: xValues,
+				YValues: yValues,
+			},
+		},
+	}
+
+	return graph.Render(chart.PNG, w)
 }
