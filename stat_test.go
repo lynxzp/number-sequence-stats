@@ -69,7 +69,7 @@ func TestStat(t *testing.T) {
 	tests = append(tests, randomizedT)
 
 	for _, tt := range tests {
-		s := New[int]()
+		s := New[int](false)
 		for _, i := range tt.input {
 			s.Add(i)
 		}
@@ -107,7 +107,7 @@ func BenchmarkStat(b *testing.B) {
 		b.Run(fmt.Sprintf("input_size_%d", v.input), func(b *testing.B) {
 
 			for i := 0; i < b.N; i++ {
-				s := New[int]()
+				s := New[int](false)
 				for j := 0; j < v.input; j++ {
 					s.Add(j)
 				}

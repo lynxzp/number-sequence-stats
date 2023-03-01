@@ -1,11 +1,26 @@
+This library designed for fast and efficient calculate basic statistical data of a big sequence of numbers, without loading all data into memory.
+
+It directly calculate:
+
+* min
+* max
+* sum
+* mean
+* variance
+* standard deviation
+
+And use t-digest algorithm to approximately calculate quantiles and build a chart.
+
+T-digest is optional. Without t-digest, library computing statistic few times faster. As example six seconds for a one billion numbers.
+
 ```
-$ go test -bench . -benchmem                             goos: linux
+$go test -bench . -benchmem                                                                                                                       goos: linux
 goarch: amd64
-pkg: github.com/lynxzp/data-sequence-stat
+pkg: github.com/lynxzp/number_sequence_stats
 cpu: Intel(R) Core(TM) i7-4790 CPU @ 3.60GHz
-BenchmarkStat/input_size_1000-8                   138484              8741 ns/op               0 B/op          0 allocs/op
-BenchmarkStat/input_size_1000000-8                   138           8680120 ns/op               0 B/op          0 allocs/op
-BenchmarkStat/input_size_1000000000-8                  1        8638914038 ns/op               0 B/op          0 allocs/op
+BenchmarkStat/input_size_1000-8                   276945              3612 ns/op               0 B/op          0 allocs/op
+BenchmarkStat/input_size_1000000-8                   328           3700582 ns/op               0 B/op          0 allocs/op
+BenchmarkStat/input_size_1000000000-8                  1        3643973531 ns/op               0 B/op          0 allocs/op
 PASS
-ok      github.com/lynxzp/data-sequence-stat    12.013s
+ok      github.com/lynxzp/number_sequence_stats 6.370s
 ```
