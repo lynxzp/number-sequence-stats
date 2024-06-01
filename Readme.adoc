@@ -16,22 +16,22 @@ T-digest is optional. Without t-digest, library computing statistic few times fa
 ```
 $go test -bench . -benchmem                                                                                                                       goos: linux
 goarch: amd64
-pkg: github.com/lynxzp/number_sequence_stats
+pkg: github.com/lynxzp/seq_stats
 cpu: Intel(R) Core(TM) i7-4790 CPU @ 3.60GHz
 BenchmarkStat/input_size_1000-8                   276945              3612 ns/op               0 B/op          0 allocs/op
 BenchmarkStat/input_size_1000000-8                   328           3700582 ns/op               0 B/op          0 allocs/op
 BenchmarkStat/input_size_1000000000-8                  1        3643973531 ns/op               0 B/op          0 allocs/op
 PASS
-ok      github.com/lynxzp/number_sequence_stats 6.370s
+ok      github.com/lynxzp/seq_stats 6.370s
 ```
 
 ## Example
 
 ```
-import stat "github.com/lynxzp/number_sequence_stats"
+import "github.com/lynxzp/seq_stats"
 
 const tDigestEnabled = true
-s := stat.New[int64](tDigestEnabled)
+s := seq_stats.New[int64](tDigestEnabled)
 for i := 0; i < 1000000; i++ {
     s.Add(int64(i))
 }
